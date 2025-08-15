@@ -4,6 +4,11 @@ const LS_KEY = 'lichtara.canalizacoes';
 
 function apiUrl(path){
   try {
+    // prefer runtime-configured base from localStorage
+    const stored = localStorage.getItem('lichtara.api.base');
+    if (stored && stored.trim()) {
+      return new URL(path, stored).toString();
+    }
     const base = window.LICHTARA_API;
     if (base && typeof base === 'string' && base.trim()) {
       return new URL(path, base).toString();
