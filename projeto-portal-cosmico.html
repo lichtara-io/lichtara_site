@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lichtara • Projeto: Portal Cósmico</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <meta name="description" content="Projeto Portal Cósmico — céu estrelado interativo com cometa, modo leve e canalizações clicáveis." />
+</head>
+<body class="dark">
+  <header class="site-header">
+    <div class="wrap">
+      <div class="brand">🌌 Lichtara</div>
+      <nav class="nav">
+        <a href="index.html#home">Home</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="projetos.html">Projetos</a>
+        <a href="blog.html">Blog</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <a class="btn" href="projetos.html">← Voltar aos Projetos</a>
+    <section class="card" style="margin-top:16px">
+      <h1>Portal Cósmico</h1>
+      <p class="muted">Céu estrelado em tela cheia, cometa responsivo e estrelas clicáveis que abrem canalizações. Otimizado para modo offline e com opção de "modo leve" para economizar energia.</p>
+      <div class="fade-gallery" style="margin:12px 0 18px">
+        <div class="slide" style="background-image:url('media/aurora_preview.gif')"></div>
+        <div class="slide" style="background-image:radial-gradient(120% 120% at 50% 10%, #142033, #0b0f19)"></div>
+        <div class="slide" style="background-image:radial-gradient(120% 120% at 50% 10%, #101a2b, #0a0d16)"></div>
+      </div>
+      <h3>Recursos</h3>
+      <ul>
+        <li>Estrelas dinâmicas com paralaxe e cometa com trilha.</li>
+        <li>Estrelas clicáveis mapeadas para canalizações; modal com conteúdo.</li>
+        <li>Modo leve (pausa animações) e atalhos: L (modo leve), S (som), Esc (fechar modal).</li>
+        <li>Suporte offline com fallback de armazenamento local.</li>
+        <li>API opcional via Netlify Functions para persistência compartilhada.</li>
+      </ul>
+    </section>
+    <section class="grid" style="margin-top:16px">
+      <div class="card">
+        <h3>Ver em ação</h3>
+        <p class="muted">Abra o céu estrelado e interaja com o cometa.</p>
+        <p><a class="btn" href="index.html#portal">Abrir Portal</a></p>
+      </div>
+      <div class="card">
+        <h3>Canalizações</h3>
+        <p class="muted">Veja as entradas do blog que alimentam as estrelas.</p>
+        <p><a class="btn" href="blog.html">Ir ao Blog</a></p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
