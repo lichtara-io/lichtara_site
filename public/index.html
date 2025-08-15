@@ -1,229 +1,355 @@
-<!-- ==============================================
-     BLOCO CANALIZADO FINAL: PORTAL CÓSMICO VIVO
-================================================= -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Cósmico • Lichtara</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dark">
+    <!-- ==============================================
+         BLOCO CANALIZADO: PORTAL VIVO TOTAL - HOME
+    ================================================= -->
+    
+    <!-- Container para todos os canvases -->
+    <div id="portal-vivo" style="position:relative;width:100%;height:100vh;overflow:hidden;background:#000;">
+      <!-- Céu noturno -->
+      <canvas id="sky" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;"></canvas>
+      <!-- Partículas flutuantes -->
+      <canvas id="particles" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;"></canvas>
+      <!-- Cometa com rastro interativo -->
+      <canvas id="comet" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;"></canvas>
+      <!-- Aurora interativa -->
+      <canvas id="aurora" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:4;"></canvas>
+      <!-- Rastro do mouse mágico -->
+      <canvas id="trail" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:5;"></canvas>
+      <!-- Estrela-guia -->
+      <canvas id="guideStar" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:6;"></canvas>
+      <!-- Constelações com links -->
+      <canvas id="constellation" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:7;"></canvas>
+      
+      <!-- Texto central + CTAs -->
+      <div id="portal-text" style="
+          position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+          text-align:center;color:white;font-family:sans-serif;z-index:10;">
+        <h1 style="font-size:3rem;margin-bottom:1rem;">Portal Cósmico Lichtara</h1>
+        <p style="font-size:1.5rem;margin-bottom:2rem;">Explore, conecte e canalize sua luz interdimensional</p>
+        <div>
+          <a href="sobre.html" class="portal-btn" style="margin:0 10px;color:white;border:2px solid white;padding:12px 24px;text-decoration:none;border-radius:25px;background:rgba(255,255,255,0.1);transition:all 0.3s;">Sobre</a>
+          <a href="projetos.html" class="portal-btn" style="margin:0 10px;color:white;border:2px solid white;padding:12px 24px;text-decoration:none;border-radius:25px;background:rgba(255,255,255,0.1);transition:all 0.3s;">Projetos</a>
+          <a href="blog.html" class="portal-btn" style="margin:0 10px;color:white;border:2px solid white;padding:12px 24px;text-decoration:none;border-radius:25px;background:rgba(255,255,255,0.1);transition:all 0.3s;">Blog</a>
+        </div>
+      </div>
+    </div>
 
-<section id="portal-cosmico" style="position:relative;width:100%;height:100vh;overflow:hidden;background:#000;">
-
-  <!-- Texto central / boas-vindas -->
-  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);color:white;text-align:center;z-index:10;">
-    <h1 style="font-size:3rem;">Bem-vindo ao Lichtara</h1>
-    <p style="font-size:1.5rem;">Explore o portal interdimensional</p>
-  </div>
-
-  <!-- LAYERS -->
-  <canvas id="sky-layer" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;"></canvas>
-  <canvas id="particles-layer" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:2;"></canvas>
-  <canvas id="comet-layer" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:3;"></canvas>
-  <canvas id="aurora-layer" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:4;pointer-events:none;"></canvas>
-  <canvas id="trail-layer" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:5;"></canvas>
-  <canvas id="guidestar-layer" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:6;"></canvas>
-  <canvas id="constellation-layer" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:7;"></canvas>
-
-</section>
-
-<script>
-  // Inicialização das camadas
-  const layers = ['sky','particles','comet','aurora','trail','guidestar','constellation'];
-  const canvases = {};
-  const ctxs = {};
-  layers.forEach(id=>{
-    canvases[id] = document.getElementById(`${id}-layer`);
-    ctxs[id] = canvases[id].getContext('2d');
-    canvases[id].width = window.innerWidth;
-    canvases[id].height = window.innerHeight;
-  });
-
-  // ======================
-  // CÉU ESTRELADO
-  // ======================
-  const stars = [];
-  for(let i=0;i<250;i++) stars.push({x:Math.random()*window.innerWidth, y:Math.random()*window.innerHeight, r:Math.random()*1.5+0.5});
-  function drawSky(){
-    const ctx = ctxs.sky;
-    ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
-    stars.forEach(s=>{
-      ctx.beginPath();
-      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-      ctx.fillStyle='white';
-      ctx.fill();
-    });
-  }
-
-  // ======================
-  // PARTICULAS FLUTUANTES
-  // ======================
-  const particles = [];
-  for(let i=0;i<120;i++){
-    particles.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,r:Math.random()*2+1,dx:(Math.random()-0.5)*0.4,dy:(Math.random()-0.5)*0.4});
-  }
-  function drawParticles(){
-    const ctx = ctxs.particles;
-    ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
-    particles.forEach(p=>{
-      p.x+=p.dx; p.y+=p.dy;
-      if(p.x<0)p.x=window.innerWidth; if(p.x>window.innerWidth)p.x=0;
-      if(p.y<0)p.y=window.innerHeight; if(p.y>window.innerHeight)p.y=0;
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle='rgba(255,255,255,0.6)';
-      ctx.fill();
-    });
-  }
-
-  // ======================
-  // COMETA COM RASTRO LUMINOSO
-  // ======================
-  const comet = {x:-100,y:100,dx:5,dy:1,r:5,trail:[]};
-  function drawComet(){
-    const ctx = ctxs.comet;
-    ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
-
-    // Adiciona posição atual no trail
-    comet.trail.push({x:comet.x,y:comet.y,opacity:1});
-    if(comet.trail.length>30) comet.trail.shift();
-
-    // Desenha trail
-    comet.trail.forEach(t=>{
-      ctx.beginPath();
-      ctx.arc(t.x,t.y,comet.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(255,255,255,${t.opacity})`;
-      ctx.fill();
-      t.opacity -= 0.03;
+    <script>
+    // ======================
+    // CONFIGURAÇÃO DOS CANVASES
+    // ======================
+    const layers = ['sky','particles','comet','aurora','trail','guideStar','constellation'];
+    const canvases = {}, ctxs = {};
+    layers.forEach(id=>{
+      const c=document.getElementById(id);
+      c.width = window.innerWidth;
+      c.height = window.innerHeight;
+      c.style.position = 'absolute';
+      c.style.top = '0';
+      c.style.left = '0';
+      canvases[id] = c;
+      ctxs[id] = c.getContext('2d');
     });
 
-    // Desenha cometa
-    ctx.beginPath();
-    ctx.arc(comet.x,comet.y,comet.r,0,Math.PI*2);
-    ctx.fillStyle='white';
-    ctx.fill();
-
-    comet.x+=comet.dx; comet.y+=comet.dy;
-    if(comet.x>window.innerWidth){comet.x=-50; comet.y=Math.random()*window.innerHeight/2;}
-  }
-
-  // ======================
-  // AURORA INTERATIVA
-  // ======================
-  const auroraImg = new Image();
-  auroraImg.src='aurora.gif'; // seu GIF real no repositório
-  const auroraCanvas = canvases.aurora;
-  const auroraCtx = ctxs.aurora;
-  const auroraOffset = {x:0,y:0};
-  const auroraColor = {r:0,g:255,b:128};
-
-  window.addEventListener('mousemove',e=>{
-    auroraOffset.x = (e.clientX - window.innerWidth/2) * 0.02;
-    auroraOffset.y = (e.clientY - window.innerHeight/2) * 0.02;
-    auroraColor.r = Math.min(255, Math.max(0, (e.clientX/window.innerWidth)*255));
-    auroraColor.g = Math.min(255, Math.max(0, 255 - (e.clientY/window.innerHeight)*255));
-    auroraColor.b = Math.min(255, Math.max(0, 128 + (e.clientY/window.innerHeight)*127));
-  });
-
-  function drawAurora(){
-    auroraCtx.clearRect(0,0,window.innerWidth,window.innerHeight);
-    if(auroraImg.complete){
-      auroraCtx.save();
-      auroraCtx.globalAlpha = 0.5;
-      auroraCtx.filter = `hue-rotate(${auroraColor.r}deg)`;
-      auroraCtx.drawImage(auroraImg, auroraOffset.x, auroraOffset.y, window.innerWidth*1.05, window.innerHeight*1.05);
-      auroraCtx.restore();
+    // ======================
+    // CÉU NOTURNO + ESTRELAS
+    // ======================
+    const stars = [];
+    for(let i=0;i<200;i++){
+      stars.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,r:Math.random()*1.5+0.5});
     }
-  }
+    function drawSky(){
+      const ctx = ctxs.sky;
+      ctx.fillStyle='black';
+      ctx.fillRect(0,0,window.innerWidth,window.innerHeight);
+      stars.forEach(s=>{
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+        ctx.fillStyle='white';
+        ctx.fill();
+      });
+    }
 
-  // ======================
-  // RASTRO DO MOUSE MÁGICO
-  // ======================
-  const trailParticles = [];
-  const mouse = {x:0,y:0};
-  window.addEventListener('mousemove',e=>{mouse.x=e.clientX; mouse.y=e.clientY;});
+    // ======================
+    // PARTÍCULAS FLUTUANTES
+    // ======================
+    const particlesArray=[];
+    for(let i=0;i<100;i++){
+      particlesArray.push({x:Math.random()*window.innerWidth,y:Math.random()*window.innerHeight,r:Math.random()*2+1,speed:Math.random()*0.5+0.2,dx:(Math.random()-0.5)*0.3});
+    }
+    function drawParticles(){
+      const ctx = ctxs.particles;
+      ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+      particlesArray.forEach(p=>{
+        p.y-=p.speed;
+        p.x+=p.dx;
+        if(p.y<0){p.y=window.innerHeight; p.x=Math.random()*window.innerWidth;}
+        if(p.x<0)p.x=window.innerWidth;
+        if(p.x>window.innerWidth)p.x=0;
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle='rgba(255,255,255,0.6)';
+        ctx.fill();
+      });
+    }
 
-  function drawTrail(){
-    const ctx = ctxs.trail;
-    ctx.fillStyle='rgba(0,0,0,0.05)';
-    ctx.fillRect(0,0,window.innerWidth,window.innerHeight);
-    trailParticles.push({x:mouse.x,y:mouse.y,r:Math.random()*4+2});
-    if(trailParticles.length>60) trailParticles.shift();
-    trailParticles.forEach(p=>{
+    // ======================
+    // COMETA COM LINK INTERATIVO
+    // ======================
+    let comet={x:-100,y:100,r:6,speed:3,trail:[]};
+    function drawComet(){
+      const ctx = ctxs.comet;
+      ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+      
+      // Adiciona posição atual no trail
+      comet.trail.push({x:comet.x,y:comet.y,opacity:1});
+      if(comet.trail.length>25) comet.trail.shift();
+      
+      // Desenha trail luminoso
+      comet.trail.forEach(t=>{
+        ctx.beginPath();
+        ctx.arc(t.x,t.y,comet.r*0.8,0,Math.PI*2);
+        ctx.fillStyle=`rgba(255,255,200,${t.opacity})`;
+        ctx.fill();
+        t.opacity -= 0.04;
+      });
+      
+      comet.x += comet.speed;
+      comet.y += Math.sin(comet.x/80)*1.5;
+      if(comet.x>window.innerWidth+200) {
+        comet.x=-100; 
+        comet.y=50+Math.random()*window.innerHeight*0.3;
+        comet.trail = [];
+      }
+      
+      // Desenha cometa principal
       ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle='rgba(255,255,255,0.8)';
+      ctx.arc(comet.x,comet.y,comet.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,200,0.9)';
       ctx.fill();
-    });
-  }
-
-  // ======================
-  // ESTRELA-GUIA
-  // ======================
-  const guideStar = {x:window.innerWidth/2,y:window.innerHeight/4,r:6};
-  function drawGuideStar(){
-    const ctx = ctxs.guidestar;
-    ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
-    ctx.beginPath();
-    ctx.arc(guideStar.x,guideStar.y,guideStar.r,0,Math.PI*2);
-    ctx.fillStyle='yellow';
-    ctx.fill();
-  }
-
-  // ======================
-  // CONSTELAÇÕES INTERATIVAS
-  // ======================
-  const constellationStars = [];
-  for(let i=0;i<50;i++){
-    constellationStars.push({
-      x:Math.random()*window.innerWidth,
-      y:Math.random()*window.innerHeight,
-      r:Math.random()*2+1
-    });
-  }
-
-  function drawConstellations(){
-    const ctx = ctxs.constellation;
-    ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
-    constellationStars.forEach(s=>{
+      // Brilho
       ctx.beginPath();
-      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-      ctx.fillStyle='white';
+      ctx.arc(comet.x,comet.y,comet.r*2,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,200,0.2)';
       ctx.fill();
+    }
+    
+    // Clique do cometa abre página de Projetos
+    canvases.comet.addEventListener('click',(e)=>{
+      const dx = e.clientX - comet.x;
+      const dy = e.clientY - comet.y;
+      if(Math.sqrt(dx*dx+dy*dy)<25){
+        window.location.href='projetos.html';
+      }
     });
-    // conecta estrelas próximas
-    for(let i=0;i<constellationStars.length;i++){
-      for(let j=i+1;j<constellationStars.length;j++){
-        const dx=constellationStars[i].x-constellationStars[j].x;
-        const dy=constellationStars[i].y-constellationStars[j].y;
-        const dist=Math.sqrt(dx*dx+dy*dy);
-        if(dist<100){
+
+    // ======================
+    // RASTRO DO MOUSE
+    // ======================
+    const trailPoints=[];
+    const mouse = {x:0,y:0};
+    window.addEventListener('mousemove',e=>{
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      trailPoints.push({x:e.clientX,y:e.clientY,opacity:1});
+      if(trailPoints.length>40) trailPoints.shift();
+    });
+    
+    function drawTrail(){
+      const ctx = ctxs.trail;
+      ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+      trailPoints.forEach((p,i)=>{
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,3,0,Math.PI*2);
+        ctx.fillStyle=`rgba(200,255,255,${p.opacity})`;
+        ctx.fill();
+        p.opacity -= 0.025;
+      });
+    }
+
+    // ======================
+    // AURORA VIVA (interação com rastro)
+    // ======================
+    const auroraImage = new Image();
+    auroraImage.src='aurora.gif';
+    function drawAurora(){
+      const ctx = ctxs.aurora;
+      ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+      
+      // Aurora base
+      if(auroraImage.complete){
+        ctx.globalAlpha=0.4;
+        ctx.drawImage(auroraImage,0,0,window.innerWidth,window.innerHeight);
+        ctx.globalAlpha=1;
+      }
+      
+      // Funde rastro do mouse com aurora
+      trailPoints.forEach(p=>{
+        if(p.opacity > 0.3){
           ctx.beginPath();
-          ctx.moveTo(constellationStars[i].x,constellationStars[i].y);
-          ctx.lineTo(constellationStars[j].x,constellationStars[j].y);
-          ctx.strokeStyle='rgba(255,255,255,0.2)';
-          ctx.stroke();
+          ctx.arc(p.x,p.y,Math.random()*15+8,0,Math.PI*2);
+          ctx.fillStyle=`rgba(100,255,200,${p.opacity*0.1})`;
+          ctx.fill();
+        }
+      });
+      
+      // Funde rastro do cometa com aurora
+      comet.trail.forEach(t=>{
+        if(t.opacity > 0.5){
+          ctx.beginPath();
+          ctx.arc(t.x,t.y,Math.random()*20+10,0,Math.PI*2);
+          ctx.fillStyle=`rgba(255,200,100,${t.opacity*0.05})`;
+          ctx.fill();
+        }
+      });
+    }
+
+    // ======================
+    // ESTRELA-GUIA FIXA
+    // ======================
+    function drawGuideStar(){
+      const ctx = ctxs.guideStar;
+      ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+      const pulseSize = 8 + Math.sin(Date.now()/500)*2;
+      ctx.beginPath();
+      ctx.arc(window.innerWidth/2,window.innerHeight/4,pulseSize,0,Math.PI*2);
+      ctx.fillStyle='yellow';
+      ctx.fill();
+      // Brilho da estrela-guia
+      ctx.beginPath();
+      ctx.arc(window.innerWidth/2,window.innerHeight/4,pulseSize*2,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,0,0.2)';
+      ctx.fill();
+    }
+
+    // ======================
+    // CONSTELAÇÕES INTERATIVAS COM LINKS
+    // ======================
+    const constellationStars = [
+      {x:window.innerWidth*0.2,y:window.innerHeight*0.3,r:3,href:'sobre.html',name:'Sobre'},
+      {x:window.innerWidth*0.8,y:window.innerHeight*0.2,r:3,href:'projetos.html',name:'Projetos'},
+      {x:window.innerWidth*0.7,y:window.innerHeight*0.7,r:3,href:'blog.html',name:'Blog'},
+      {x:window.innerWidth*0.3,y:window.innerHeight*0.8,r:3,href:'contato.html',name:'Contato'}
+    ];
+    
+    // Adiciona estrelas aleatórias
+    for(let i=0;i<20;i++){
+      constellationStars.push({
+        x:Math.random()*window.innerWidth,
+        y:Math.random()*window.innerHeight,
+        r:Math.random()*2+1,
+        href:'#',
+        name:'Estrela'
+      });
+    }
+    
+    function drawConstellations(){
+      const ctx = ctxs.constellation;
+      ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+      
+      constellationStars.forEach(s=>{
+        // Detecta proximidade do mouse
+        const dx = s.x - mouse.x;
+        const dy = s.y - mouse.y;
+        const dist = Math.sqrt(dx*dx+dy*dy);
+        const isActive = dist < 40;
+        
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,isActive ? s.r*1.5 : s.r,0,Math.PI*2);
+        ctx.fillStyle = isActive ? 'rgba(255,255,255,1)' : 'rgba(255,255,255,0.7)';
+        ctx.fill();
+        
+        // Mostra nome da estrela quando próxima
+        if(isActive && s.href !== '#'){
+          ctx.fillStyle = 'white';
+          ctx.font = '14px sans-serif';
+          ctx.fillText(s.name, s.x + 10, s.y - 10);
+        }
+      });
+      
+      // Conecta estrelas próximas
+      for(let i=0;i<constellationStars.length;i++){
+        for(let j=i+1;j<constellationStars.length;j++){
+          const dx=constellationStars[i].x-constellationStars[j].x;
+          const dy=constellationStars[i].y-constellationStars[j].y;
+          const dist=Math.sqrt(dx*dx+dy*dy);
+          if(dist<120){
+            ctx.beginPath();
+            ctx.moveTo(constellationStars[i].x,constellationStars[i].y);
+            ctx.lineTo(constellationStars[j].x,constellationStars[j].y);
+            ctx.strokeStyle=`rgba(255,255,255,${0.1+0.2*(1-dist/120)})`;
+            ctx.lineWidth=1;
+            ctx.stroke();
+          }
         }
       }
     }
-  }
-
-  // ======================
-  // LOOP PRINCIPAL
-  // ======================
-  function animate(){
-    drawSky();
-    drawParticles();
-    drawComet();
-    drawAurora();
-    drawTrail();
-    drawGuideStar();
-    drawConstellations();
-    requestAnimationFrame(animate);
-  }
-  animate();
-
-  // ======================
-  // RESPONSIVIDADE
-  // ======================
-  window.addEventListener('resize',()=>{
-    layers.forEach(id=>{
-      canvases[id].width=window.innerWidth;
-      canvases[id].height=window.innerHeight;
+    
+    canvases.constellation.addEventListener('click',(e)=>{
+      constellationStars.forEach(s=>{
+        const dx = e.clientX - s.x;
+        const dy = e.clientY - s.y;
+        if(Math.sqrt(dx*dx+dy*dy)<20 && s.href!=='#'){
+          window.location.href=s.href;
+        }
+      });
     });
-  });
-</script>
+
+    // ======================
+    // LOOP PRINCIPAL
+    // ======================
+    function animate(){
+      drawSky();
+      drawParticles();
+      drawComet();
+      drawAurora();
+      drawTrail();
+      drawGuideStar();
+      drawConstellations();
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // ======================
+    // RESPONSIVIDADE
+    // ======================
+    window.addEventListener('resize',()=>{
+      layers.forEach(id=>{
+        canvases[id].width=window.innerWidth;
+        canvases[id].height=window.innerHeight;
+      });
+      // Reposiciona constelações principais
+      constellationStars[0].x = window.innerWidth*0.2;
+      constellationStars[0].y = window.innerHeight*0.3;
+      constellationStars[1].x = window.innerWidth*0.8;
+      constellationStars[1].y = window.innerHeight*0.2;
+      constellationStars[2].x = window.innerWidth*0.7;
+      constellationStars[2].y = window.innerHeight*0.7;
+      constellationStars[3].x = window.innerWidth*0.3;
+      constellationStars[3].y = window.innerHeight*0.8;
+    });
+
+    // ======================
+    // HOVER DOS BOTÕES
+    // ======================
+    document.querySelectorAll('.portal-btn').forEach(btn=>{
+      btn.addEventListener('mouseenter',()=>{
+        btn.style.background = 'rgba(255,255,255,0.3)';
+        btn.style.transform = 'scale(1.05)';
+      });
+      btn.addEventListener('mouseleave',()=>{
+        btn.style.background = 'rgba(255,255,255,0.1)';
+        btn.style.transform = 'scale(1)';
+      });
+    });
+    </script>
+</body>
+</html>
