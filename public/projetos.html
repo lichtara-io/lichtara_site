@@ -26,12 +26,15 @@
   <script>
     const projetos = [
       { slug:'portal-cosmico', titulo:'Portal Cósmico', desc:'Céu estrelado, cometa e canalizações interativas.', link:'index.html#portal' },
-      { slug:'mapa-canalizacao', titulo:'Mapa de Canalização', desc:'Cartografia da comunicação interdimensional.', link:'../mapa_canalizacao_tecnica.html' }
+      { slug:'mapa-canalizacao', titulo:'Mapa de Canalização', desc:'Cartografia da comunicação interdimensional.', link:'../mapa_canalizacao_tecnica.html' },
+      { slug:'luz-ativa', titulo:'Luz Ativa', desc:'Experiências sensoriais que transformam percepção em energia criativa.' },
+      { slug:'memoria-estelar', titulo:'Memória Estelar', desc:'Arquivo de experiências e insights para iluminar caminhos futuros.' }
     ];
     const grid = document.getElementById('lista-projetos');
     projetos.forEach(p => {
       const el = document.createElement('a');
-      el.href = p.link || `projeto-${p.slug}.html`;
+      el.id = p.slug;
+      el.href = p.link || `#${p.slug}`;
       el.className = 'card';
       el.innerHTML = `<h3>${p.titulo}</h3><p class="muted">${p.desc}</p>`;
       grid.appendChild(el);
