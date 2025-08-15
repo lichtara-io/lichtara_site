@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lichtara • Projetos</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="dark">
+  <header class="site-header">
+    <div class="wrap">
+      <div class="brand">🌌 Lichtara</div>
+      <nav class="nav">
+        <a href="index.html#home">Home</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="projetos.html">Projetos</a>
+        <a href="blog.html">Blog</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <h1>Projetos</h1>
+    <div class="grid" id="lista-projetos"></div>
+  </main>
+  <script>
+    const projetos = [
+      { slug:'portal-cosmico', titulo:'Portal Cósmico', desc:'Céu estrelado, cometa e canalizações interativas.', link:'index.html#portal' },
+      { slug:'mapa-canalizacao', titulo:'Mapa de Canalização', desc:'Cartografia da comunicação interdimensional.', link:'../mapa_canalizacao_tecnica.html' }
+    ];
+    const grid = document.getElementById('lista-projetos');
+    projetos.forEach(p => {
+      const el = document.createElement('a');
+      el.href = p.link || `projeto-${p.slug}.html`;
+      el.className = 'card';
+      el.innerHTML = `<h3>${p.titulo}</h3><p class="muted">${p.desc}</p>`;
+      grid.appendChild(el);
+    });
+  </script>
+</body>
+</html>
