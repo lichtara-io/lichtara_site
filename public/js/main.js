@@ -283,7 +283,9 @@ if (ceu) {
 
   // main render loop
   function draw() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  // audio sync
+  try { if (typeof syncAudioToAurora === 'function') syncAudioToAurora(performance.now()); } catch(e) {}
     if (!effectsEnabled) { requestAnimationFrame(draw); return; }
 
     // stars
